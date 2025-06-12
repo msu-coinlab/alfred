@@ -134,6 +134,10 @@ bool send_json_streams(std::string scenario_id,
     core["DataTransferObject"]["FileId"] = exec_uuid;
     scenario["ScenarioId"] = scenario_id_int;
 
+    std::cout << "core_str: " << core_str << std::endl;
+    std::cout << "scenario_str: " << scenario_str << std::endl;
+    std::cout << "geography_str: " << geography_str << std::endl;
+
     for (auto &&geography_tmp: geography) {
         geography_tmp["ScenarioId"] = scenario_id_int;
     }
