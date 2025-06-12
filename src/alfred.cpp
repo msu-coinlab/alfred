@@ -131,7 +131,7 @@ bool send_json_streams(std::string scenario_id,
     json scenario = json::parse(scenario_str);
     json geography = json::parse(geography_str);
     core["DataTransferObject"]["Id"] = scenario_id_int;
-    core["DataTransferObject"]["FileId"] = exec_uuid;
+    core["DataTransferObject"]["FileId"] = utils::replace_all(exec_uuid, "/", "_");
     scenario["ScenarioId"] = scenario_id_int;
 
     std::cout << "core_str: " << core_str << std::endl;
