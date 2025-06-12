@@ -154,7 +154,7 @@ bool send_json_streams(std::string scenario_id,
     std::string reportloads_path = fmt::format("data/scenarios/modeloutput/reportloads/scenarioid={}/reportloads.parquet", scenario_id);
     //thrigger
 
-    std::string core_path = fmt::format("lambdarequests/optimize/optimizeSce_{}.json", exec_uuid);
+    std::string core_path = fmt::format("lambdarequests/optimize/optimizeSce_{}.json", utils::replace_all(exec_uuid, "/", "_"));
     fmt::print("core_path: {}\n", core_path);
 
     try {
@@ -298,8 +298,6 @@ bool get_files(std::string scenario_id, std::string emo_uuid, std::string exec_u
     return ret;
 }
 
-
-
 bool execute_20(std::string scenario_id, std::string emo_uuid, std::string exec_uuid) {
     bool got_files = false;
     got_files = get_files(scenario_id, emo_uuid, exec_uuid);
@@ -385,7 +383,8 @@ void retrieve_exec() {
             std::cout << "Error on retrieve_exec\n" << error.what() << "\n";
             auto cerror =  fmt::format("When trying using stoi for (OPT4CAST_WAIT_MILLISECS_IN_CAST): {} ", error.what());
         }
-        std::string core_path = fmt::format("lambdarequests/optimize/optimizeSce_{}.json", exec_uuid);
+
+        std::string core_path = fmt::format("lambdarequests/optimize/optimizeSce_{}.json", utils::replace_all(exec_uuid, "/", "_"));
 
         if (awss3::is_object("cast-optimization-dev", core_path) == false || 
                 now_millisec - started_time > waiting_time) 
